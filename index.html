@@ -51,6 +51,7 @@
   updateCounter();
 </script>
 </body>
+
 <head>
   <title>Outstanding Balance of Back Salary</title>
   <style>
@@ -98,6 +99,7 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
   const startingAmount = 35000.00;
   const annualRate = 0.12; // 12% compounding
   const startTime = new Date("2017-06-01T00:00:00").getTime();
@@ -113,7 +115,7 @@
     const now = new Date().getTime();
     const yearsElapsed = Math.max(0, (now - startTime) / (1000*60*60*24*365));
 
-    // Continuous compounding
+    // Continuous compounding formula
     const total = startingAmount * Math.exp(annualRate * yearsElapsed);
     const interest = total - startingAmount;
 
@@ -123,8 +125,12 @@
     const cents = "." + parts[1];
 
     // Update ticker
-    document.getElementById("dollars").innerText = "$" + dollars;
-    document.getElementById("cents").innerText = cents;
+    const dollarsElem = document.getElementById("dollars");
+    const centsElem = document.getElementById("cents");
+    if(dollarsElem && centsElem) {
+      dollarsElem.innerText = "$" + dollars;
+      centsElem.innerText = cents;
+    }
 
     // Update breakdown
     document.getElementById("principal").innerText = "$" + formatMoney(startingAmount);
@@ -132,8 +138,9 @@
     document.getElementById("total").innerText = "$" + formatMoney(total);
   }
 
-  setInterval(updateCounter, 100); // updates 10 times per second
+  setInterval(updateCounter, 100); // update 10 times/sec
   updateCounter();
+});
 </script>
 
 </body>
