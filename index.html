@@ -33,7 +33,7 @@
   const startingAmount = 99578.96;
   const perSecondIncrease = 0.0284186 / 60;
 
-  const startTime = new Date("2026-03-01T00:00:00");
+  const startTime = new Date("2026-03-01T00:00:00").getTime();
 
   function updateCounter() {
     const now = new Date().getTime();
@@ -41,7 +41,7 @@
     const safeSeconds = Math.max(0, secondsElapsed);
     const total = startingAmount + (safeSeconds * perSecondIncrease);
 
-    document.getElementbyId("counter").innerText = 
+    document.getElementById("counter").innerText = 
       "$" + total.toFixed(4);
   }
   setInterval(updateCounter, 1000);
