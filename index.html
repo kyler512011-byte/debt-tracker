@@ -42,7 +42,10 @@
     const total = startingAmount * Math.pow(1 + annualRate, safeYears);
 
     document.getElementById("counter").innerText = 
-      "$" + total.toFixed(4);
+      "$" + total.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 4
+      });
   }
   setInterval(updateCounter, 1000);
   updateCounter();
