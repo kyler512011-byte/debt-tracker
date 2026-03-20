@@ -51,7 +51,39 @@
   updateCounter();
 </script>
 </body>
+<head>
+  <title>Outstanding Balance of Back Salary</title>
+  <style>
+    .display {
+      font-size: 64px;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+
+    .dollars {
+      color: #00ffcc;
+    }
+
+    .cents {
+      font-size: 32px;
+      color: #00ffaa;
+      margin-left: 5px;
+    }
+
+    .breakdown {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    .breakdown span {
+      color: #fff;
+      font-weight: bold;
+    }
+  </style>
+</head>
 <body>
+
 <h1>Outstanding Balance of Back Salary</h1>
 
 <div class="display">
@@ -65,71 +97,44 @@
   <p><strong>Total Owed: <span id="total">$0.00</span></strong></p>
 </div>
 
-<style>
-  .display {
-    font-size: 64px;
-    font-weight: bold;
-    margin-top: 40px;
-  }
-
-  .dollars {
-    color: #00ffcc;
-  }
-
-  .cents {
-    font-size: 32px;
-    color: #00ffaa;
-    margin-left: 5px;
-  }
-
-  .breakdown {
-    margin-top: 0px;
-    font-size: 18px;
-    color: #ccc;
-  }
-
-  .breakdown span {
-    color: #fff;
-    font-weight: bold;
-  }
-</style>
-
 <script>
   const startingAmount = 35000.00;
-  const annualRate = 0.12; // 12%
-
+  const annualRate = 0.12; // 12% compounding
   const startTime = new Date("2017-06-01T00:00:00").getTime();
 
   function formatMoney(num, decimals = 4) {
     return num.toLocaleString("en-US", {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 4
+      maximumFractionDigits: decimals
     });
   }
 
   function updateCounter() {
     const now = new Date().getTime();
-    const yearsElapsed = Math.max(0, (now - startTime) / (1000 * 60 * 60 * 24 * 365));
-    
+    const yearsElapsed = Math.max(0, (now - startTime) / (1000*60*60*24*365));
+
     // Continuous compounding
     const total = startingAmount * Math.exp(annualRate * yearsElapsed);
     const interest = total - startingAmount;
 
-    // Split dollars/cents
+    // Split dollars and cents
     const parts = total.toFixed(4).split(".");
     const dollars = Number(parts[0]).toLocaleString("en-US");
     const cents = "." + parts[1];
 
+    // Update ticker
     document.getElementById("dollars").innerText = "$" + dollars;
     document.getElementById("cents").innerText = cents;
 
+    // Update breakdown
     document.getElementById("principal").innerText = "$" + formatMoney(startingAmount);
     document.getElementById("interest").innerText = "$" + formatMoney(interest);
     document.getElementById("total").innerText = "$" + formatMoney(total);
   }
 
-  setInterval(updateCounter, 100); // update 10 times/sec for smooth animation
+  setInterval(updateCounter, 100); // updates 10 times per second
   updateCounter();
 </script>
+
 </body>
 </html>
