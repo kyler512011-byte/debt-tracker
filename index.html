@@ -33,17 +33,18 @@ HTML
 
 <script>
   const startingAmount = 99578.96;
-  const perMinuteIncrease = 0.0284186;
+  const perSecondIncrease = 0.0284186 / 60;
 
   const startTime = new Date("2026-03-01T00:00:00");
 
-  function updateCounter () {
-    const now = new Date ();
-    const minutesElapsed = (now - startTime) / 60000;
-    const total = startingAmount + (minutesElapsed * perMinuteIncrease);
+  function updateCounter() {
+    const now = new Date().getTime();
+    const secondsElapsed = (now - startTime) / 1000;
+    const safeSeconds = Math.max(0, secondsElapsed);
+    const total = startingAmount + (safeSeconds * perSecondIncrease);
 
     document.getElementbyId("counter").innerText = 
-      "$" + total.toFixed(2);
+      "$" + total.toFixed(4);
   }
   setInterval(updateCounter, 1000);
   updateCounter();
