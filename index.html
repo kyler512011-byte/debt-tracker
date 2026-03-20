@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Outstanding Balance of Back Salary</title>
+  <title>Outstanding Balance of Back Salary, Expenses, and Interest</title>
   <style>
     .display {
       font-size: 64px;
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function formatMoney(num, decimals = 3) {
     return num.toLocaleString("en-US", {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 3
+      maximumFractionDigits: decimals
     });
   }
 
