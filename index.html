@@ -60,9 +60,10 @@
 </div>
 
 <div class="breakdown">
-  <p>Starting Balance: <span id="principal">$0.00</span></p>
+  <p>Starting Balance: <span id="principal">$35000.00</span></p>
   <p>Accrued Interest: <span id="interest">$0.00</span></p>
-  <p><strong> Total Owed: <span id="total">$0.00</span></strong></p>
+  <p><strong>Total Owed: <span id="total">$0.00</span></strong></p>
+</div>
 
 <style>
   .display {
@@ -86,6 +87,7 @@
     font-size: 18px;
     color: #ccc;
   }
+
   .breakdown span {
     color: #fff;
     font-weight: bold;
@@ -94,7 +96,7 @@
 
 <script>
   const startingAmount = 35000.00;
-  const annualRate = 0.12
+  const annualRate = 0.12; // 12%
 
   const startTime = new Date("2017-06-01T00:00:00").getTime();
 
@@ -104,11 +106,16 @@
       maximumFractionDigits: 4
     });
   }
+
   function updateCounter() {
     const now = new Date().getTime();
     const yearsElapsed = Math.max(0, (now - startTime) / (1000 * 60 * 60 * 24 * 365));
+    
+    // Continuous compounding
     const total = startingAmount * Math.exp(annualRate * yearsElapsed);
     const interest = total - startingAmount;
+
+    // Split dollars/cents
     const parts = total.toFixed(4).split(".");
     const dollars = Number(parts[0]).toLocaleString("en-US");
     const cents = "." + parts[1];
@@ -116,15 +123,12 @@
     document.getElementById("dollars").innerText = "$" + dollars;
     document.getElementById("cents").innerText = cents;
 
-    document.getElementById("principal").innerText = 
-      "$" + formatMoney(startingAmount);
-    document.getElementById("interest").innerText = 
-      "$" + formatMoney(interest);
-    document.getElementById("total").innerText=
-      "$" + formatMoney(total);
+    document.getElementById("principal").innerText = "$" + formatMoney(startingAmount);
+    document.getElementById("interest").innerText = "$" + formatMoney(interest);
+    document.getElementById("total").innerText = "$" + formatMoney(total);
   }
 
-  setInterval(updateCounter, 100);
+  setInterval(updateCounter, 100); // update 10 times/sec for smooth animation
   updateCounter();
 </script>
 </body>
